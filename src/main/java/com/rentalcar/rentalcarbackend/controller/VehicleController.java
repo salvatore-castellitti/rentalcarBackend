@@ -18,20 +18,22 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:4200")
 public class VehicleController {
 
-    @Autowired
-    private VehicleRepository vehicleRepository;
+
 
     @Autowired
     private VehicleService vehicleService;
 
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
     @GetMapping("/vehicles")
     public List<Vehicle> getListVehicle(){
-       return vehicleRepository.findAll();
+       return vehicleService.findAllVehicle();
     }
 
     @PostMapping("/vehicles")
     public Vehicle createVehicle(@RequestBody Vehicle vehicle){
-        return  vehicleRepository.save(vehicle);
+        return  vehicleService.saveVehicle(vehicle);
     }
 
     //get vehicle by id

@@ -4,6 +4,7 @@ import com.rentalcar.rentalcarbackend.exception.ResourceNotFoundException;
 import com.rentalcar.rentalcarbackend.model.Reservation;
 import com.rentalcar.rentalcarbackend.model.User;
 import com.rentalcar.rentalcarbackend.repository.ReservationRepository;
+import com.rentalcar.rentalcarbackend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +20,17 @@ public class ReservationController {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private ReservationService reservationService;
+
     @GetMapping("/reservations")
     public List<Reservation> getAllReservation(){
-        return reservationRepository.findAll();
+        return reservationService.findAllReservations();
     }
 
     @PostMapping("/reservations")
     public Reservation createReservation(@RequestBody Reservation reservation){
-        return  reservationRepository.save(reservation);
+        return  reservationService.saveReservation(reservation);
     }
 
     //get reservation by id
