@@ -25,11 +25,11 @@ public class User {
     @Transient
     private String token;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Reservation> reservation;
 
-    public User(String firstName, String lastName, String emailId, String username, String password, List<Reservation> reservation) {
+    public User(String firstName, String lastName, String username, String password, List<Reservation> reservation) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

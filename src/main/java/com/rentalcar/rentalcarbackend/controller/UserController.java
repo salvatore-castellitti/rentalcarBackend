@@ -37,8 +37,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         user.setRole(Role.CUSTOMER);
-        return null;
-//        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
     @GetMapping("/users/login")
@@ -53,35 +52,47 @@ public class UserController {
     }
 
     //get all employees
-    @GetMapping("/users")
+    @GetMapping("/users/list")
     public List<User> getAllUsers(){
         return userRepository.findAll();
     }
 
-    @PostMapping("/users")
-    public User createUser(@RequestBody User user){
-        return  userService.saveUser(user);
+    @PostMapping("/users/add")
+//    public User createUser(@RequestBody User user){
+//        user.setRole(Role.CUSTOMER);
+//        return  userService.saveUser(user);
+//    }
+    public ResponseEntity<?> createUser(@RequestBody User user){
+        user.setRole(Role.CUSTOMER);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+    }
+
+
+
+        @PostMapping("/users/update")
+    public User updateUser(@RequestBody User user){
+        return  userService.updateUser(user);
     }
 
     //get user by id
-//    @GetMapping("/users/{id}")
-//    public ResponseEntity<User> getUserById(@PathVariable Long id){
-//        User user = userService.findById(id)
-//                .orElseThrow(()-> new ResourceNotFoundException("User not exist with id :" + id ));
-//        return ResponseEntity.ok(user);
-//    }
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("User not exist with id :" + id ));
+        return ResponseEntity.ok(user);
+    }
 //
 //    //delete user
-//    @DeleteMapping("/users/{id}")
-//    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
-//        User user = userService.findById(id)
-//                .orElseThrow(()-> new ResourceNotFoundException("User not exist with id :" + id ));
-//
-//        userService.delete(user);
-//        Map<String,Boolean> response = new HashMap<>();
-//        response.put("deleted", Boolean.TRUE);
-//        return ResponseEntity.ok(response);
-//    }
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
+        User user = userRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("User not exist with id :" + id ));
+
+        userRepository.delete(user);
+        Map<String,Boolean> response = new HashMap<>();
+        response.put("deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
 //
 
 }
