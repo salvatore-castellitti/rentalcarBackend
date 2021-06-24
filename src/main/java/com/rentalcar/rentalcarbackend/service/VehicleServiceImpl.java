@@ -35,10 +35,6 @@ public class VehicleServiceImpl implements VehicleService{
 
     @Override
     public List<Vehicle> getFreeVehicle(Date sDate, Date eDate) {
-        TypedQuery<Vehicle> query = entityManager.createQuery(
-                "SELECT v from Vehicle v where v.id not in (select ve.id from Vehicle as ve join ve.reservation as verRes  where verRes.endDate > (?1) AND verRes.startDate < (?2))" , Vehicle.class);
-        List<Vehicle> vehciles = query.setParameter(1, sDate).setParameter(2, eDate).getResultList();
-
-        return vehciles;
+        return vehicleRepository.getFreeVehicle(sDate,eDate);
     }
 }

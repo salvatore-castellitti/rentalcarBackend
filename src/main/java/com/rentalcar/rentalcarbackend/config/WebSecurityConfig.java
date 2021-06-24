@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,10 +40,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**","/error").permitAll()
                 .antMatchers("/api/v1/users/login").permitAll()
                 .antMatchers("/api/v1/users/registration/").permitAll()
-                .antMatchers("/api/v1/users/**").hasAnyRole("ADMIN","CUSTOMER")
-                .antMatchers("/api/v1/vehicles").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/users/list").hasRole("ADMIN")
+                .antMatchers("/api/v1/users/add").hasRole("ADMIN")
+                .antMatchers("/api/v1/users/update").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/users/get/**").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/users/delete/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/vehicles/list").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/vehicles/add").hasRole("ADMIN")
+                .antMatchers("/api/v1/vehicles/get/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/vehicles/delete/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/vehicles/freeVehicle/**").hasRole("CUSTOMER")
                 .antMatchers("/api/v1/vehicles/**").hasAnyRole("ADMIN","CUSTOMER")
-                .antMatchers("/api/v1/reservations/**").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/reservations/list").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/reservations/add").hasRole("ADMIN")
+                .antMatchers("/api/v1/reservations/get/**").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers("/api/v1/reservations/delete/**").hasRole("ADMIN")
                 .anyRequest().fullyAuthenticated()
                 .and()
                 .logout().permitAll()

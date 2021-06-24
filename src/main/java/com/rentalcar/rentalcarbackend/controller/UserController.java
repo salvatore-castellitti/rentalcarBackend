@@ -75,7 +75,7 @@ public class UserController {
     }
 
     //get user by id
-    @GetMapping("/users/{id}")
+    @GetMapping("/users/get/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id){
         User user = userRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("User not exist with id :" + id ));
@@ -83,7 +83,7 @@ public class UserController {
     }
 //
 //    //delete user
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/users/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
         User user = userRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("User not exist with id :" + id ));

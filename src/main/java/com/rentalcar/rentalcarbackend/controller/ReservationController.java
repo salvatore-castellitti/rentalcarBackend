@@ -23,18 +23,18 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @GetMapping("/reservations")
+    @GetMapping("/reservations/list")
     public List<Reservation> getAllReservation(){
         return reservationService.findAllReservations();
     }
 
-    @PostMapping("/reservations")
+    @PostMapping("/reservations/add")
     public Reservation createReservation(@RequestBody Reservation reservation){
         return  reservationService.saveReservation(reservation);
     }
 
     //get reservation by id
-    @GetMapping("/reservations/{id}")
+    @GetMapping("/reservations/get/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable Long id){
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("reservation not exist with id :" + id ));
@@ -42,7 +42,7 @@ public class ReservationController {
     }
 
     //delete reservation
-    @DeleteMapping("/reservations/{id}")
+    @DeleteMapping("/reservations/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteReservation(@PathVariable Long id){
         Reservation reservation = reservationRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("reservation not exist with id :" + id ));

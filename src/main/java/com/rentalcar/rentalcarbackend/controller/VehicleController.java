@@ -26,18 +26,18 @@ public class VehicleController {
     @Autowired
     private VehicleRepository vehicleRepository;
 
-    @GetMapping("/vehicles")
+    @GetMapping("/vehicles/list")
     public List<Vehicle> getListVehicle(){
        return vehicleService.findAllVehicle();
     }
 
-    @PostMapping("/vehicles")
+    @PostMapping("/vehicles/add")
     public Vehicle createVehicle(@RequestBody Vehicle vehicle){
         return  vehicleService.saveVehicle(vehicle);
     }
 
     //get vehicle by id
-    @GetMapping("/vehicles/{id}")
+    @GetMapping("/vehicles/get/{id}")
     public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id){
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Vehicle not exist with id :" + id ));
@@ -45,7 +45,7 @@ public class VehicleController {
     }
 
     //delete vehicle
-    @DeleteMapping("/vehicles/{id}")
+    @DeleteMapping("/vehicles/delete/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteVehicle(@PathVariable Long id){
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Vehicle not exist with id :" + id ));
@@ -56,7 +56,7 @@ public class VehicleController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/vehicles/{sDate}/{eDate}")
+    @GetMapping("/vehicles/freeVehicle/{sDate}/{eDate}")
     public List<Vehicle> getFreeVehicle(@PathVariable Date sDate, @PathVariable Date eDate) {
         return vehicleService.getFreeVehicle(sDate, eDate);
     }
