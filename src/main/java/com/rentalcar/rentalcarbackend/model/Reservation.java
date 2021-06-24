@@ -15,6 +15,7 @@ import java.util.Date;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
     @Column(name = "start_date")
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -24,6 +25,8 @@ public class Reservation {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern="dd/MM/yyyy")
     private Date endDate;
+    @Column(name = "approved")
+    private Boolean approved;
 
     @ManyToOne
     @JoinColumn(name = "user", referencedColumnName = "id")
@@ -81,5 +84,13 @@ public class Reservation {
 
     public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public Boolean getApproved() {
+        return approved;
+    }
+
+    public void setApproved(Boolean approved) {
+        this.approved = approved;
     }
 }

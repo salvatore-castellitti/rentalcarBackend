@@ -3,6 +3,7 @@ package com.rentalcar.rentalcarbackend.controller;
 import com.rentalcar.rentalcarbackend.exception.ResourceNotFoundException;
 import com.rentalcar.rentalcarbackend.model.Reservation;
 import com.rentalcar.rentalcarbackend.model.User;
+import com.rentalcar.rentalcarbackend.model.Vehicle;
 import com.rentalcar.rentalcarbackend.repository.ReservationRepository;
 import com.rentalcar.rentalcarbackend.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +53,5 @@ public class ReservationController {
         response.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
+
 }
